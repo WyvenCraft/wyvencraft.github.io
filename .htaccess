@@ -1,0 +1,18 @@
+  Options +FollowSymLinks
+  Options -MultiViews
+  Options -Indexes
+  RewriteEngine on
+  IndexIgnore *
+  RewriteCond %{REQUEST_URI}::$1 ^(.*?/)(.*)::\2$
+  RewriteRule ^(.*)$ - [E=BASE:%1]
+
+  RewriteCond %{REQUEST_FILENAME} !-d
+
+  # Disabled
+  # RewriteRule ^(.+)/$ $1 [R=301,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+
+  RewriteRule ^(.*)$ %{ENV:BASE}index.php?route=/$1  [NC,L,QSA]
+  #RewriteRule ^(.*)$ ./index.php?route=/$1 [NC,L,QSA]
